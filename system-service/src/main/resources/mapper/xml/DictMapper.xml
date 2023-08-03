@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.accounting.mapper.DictMapper">
+    <select id="listByDictCode" resultType="com.atguigu.accounting.entity.Dict">
+        SELECT *
+        FROM dict
+        WHERE parent_id = (SELECT id FROM dict WHERE dict_code = #{dictCode})
+    </select>
+    <select id="getDictNameByDictCodeAndValue" resultType="java.lang.String">
+        SELECT t2.name
+        FROM dict t1
+                 JOIN dict t2
+                      ON t1.id = t2.parent_id
+        WHERE t1.dict_code = #{dictCode}
+          AND t2.value = #{value}
+    </select>
+</mapper>

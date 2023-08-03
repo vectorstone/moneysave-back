@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.accounting.mapper.BookMapper">
+
+    <select id="getMonthlyCost" resultType="com.atguigu.accounting.entity.vo.MonthCostVo">
+        select date_format(create_time, '%Y-%m') cdate, sum(amount) cost
+        from book
+        group by cdate
+        having cdate >= #{start}
+           and cdate &lt;= #{end}
+        order by cdate asc
+    </select>
+    <select id="getAllData" resultType="com.atguigu.accounting.entity.Book">
+        select type,amount,category,subcategory,remark,label,date_format(create_time,'%Y-%m-%e') `create_time`
+        from book
+        order by create_time asc
+    </select>
+</mapper>
