@@ -7,6 +7,7 @@ import com.atguigu.accounting.service.DictService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -30,12 +31,14 @@ import java.util.List;
 public class DictController {
     @Resource
     DictService dictService;
+    @PreAuthorize("hasAnyAuthority('bnt.dict.upload')")
     @ApiOperation("categoryDict字典导入模块")
     @PostMapping("/import")
     public R importDict(@RequestParam("file") MultipartFile file){
         dictService.importDict(file);
         return R.ok();
     }
+    @PreAuthorize("hasAnyAuthority('bnt.dict.download')")
     @ApiOperation(value = "下载字典文件")
     @GetMapping("/export")
     //这个地方不能有返回值,否则会覆盖服务器给前端的response响应
@@ -43,12 +46,14 @@ public class DictController {
         dictService.exportDicts(response);
     }
 
+    @PreAuthorize("hasAnyAuthority('bnt.dict.list')")
     @ApiOperation(value = "根据pid查询信息")
     @GetMapping("/{pid}")
     public R getByPid(@PathVariable("pid") Long pid){
         List<Dict> dicts = dictService.getByPid(pid);
         return R.ok().data("items",dicts);
     }
+    @PreAuthorize("hasAnyAuthority('bnt.dict.list')")
     @ApiOperation(value = "根据name查询该字典对应的子字典")
     @GetMapping("/getsub")
     public R getByPname(@RequestParam("name") String name){
@@ -59,6 +64,7 @@ public class DictController {
     }
 
     //新增下一级数据字典
+    @PreAuthorize("hasAnyAuthority('bnt.dict.add')")
     @ApiOperation(value = "新增下一级的数据字典")
     @PostMapping
     public R save(@RequestBody Dict dict){
@@ -67,6 +73,7 @@ public class DictController {
     }
 
     //根据id删除数据字典
+    @PreAuthorize("hasAnyAuthority('bnt.dict.remove')")
     @ApiOperation(value = "根据id删除数据字典")
     @DeleteMapping("/{id}")
     public R deleteById(@PathVariable("id") Long id){
@@ -77,11 +84,13 @@ public class DictController {
     }
 
     //更新数据字典(包含了根据id查询数字字典来回显和根据id查询数据字典)
+    @PreAuthorize("hasAnyAuthority('bnt.dict.list')")
     @ApiOperation(value = "根据id查询信息,数据回显用")
     @GetMapping("/search/{id}")
     public R getById(@PathVariable("id") Long id){
         return R.ok().data("items",dictService.getById(id));
     }
+    @PreAuthorize("hasAnyAuthority('bnt.dict.update')")
     @ApiOperation(value = "更新数据字典")
     @PutMapping
     public R update(@RequestBody Dict dict){
@@ -89,6 +98,7 @@ public class DictController {
         return R.ok();
     }
     //获取所有的字典信息
+    @PreAuthorize("hasAnyAuthority('bnt.dict.list')")
     @ApiOperation("获取所有字典信息")
     @GetMapping("/getDicts")
     public R getDicts(){

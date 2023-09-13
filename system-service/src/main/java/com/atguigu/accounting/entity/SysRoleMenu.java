@@ -8,8 +8,10 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -22,6 +24,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="SysRoleMenu对象", description="角色菜单")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;

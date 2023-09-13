@@ -3,13 +3,16 @@ package com.atguigu.accounting.service.impl;
 import com.atguigu.accounting.entity.SysRole;
 import com.atguigu.accounting.entity.SysUserRole;
 import com.atguigu.accounting.entity.vo.AssignRoleVo;
+import com.atguigu.accounting.entity.vo.SysRoleQueryVo;
 import com.atguigu.accounting.mapper.SysRoleMapper;
 import com.atguigu.accounting.mapper.SysUserRoleMapper;
 import com.atguigu.accounting.service.SysRoleService;
 import com.atguigu.accounting.service.SysUserRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +35,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     SysUserRoleService sysUserRoleService;
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+    @Override
+    public Page<SysRole> selectPage(Page<SysRole> pageParam, SysRoleQueryVo sysRoleQueryVo) {
+        return sysRoleMapper.selectPage(pageParam,sysRoleQueryVo);
+    }
     @Override
     public Map<String, Object> getRolesByUserId(String userId) {
         //获取所有的角色列表对象

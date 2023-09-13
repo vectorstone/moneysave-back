@@ -1,0 +1,42 @@
+2023-09-13 09:12:24 |INFO  |main |StartupInfoLogger.java:55 |com.atguigu.accounting.AccountingApplication |Starting AccountingApplication on Gavin-laptop with PID 4220 (D:\OneDrive\AtGuiGu\JavaDevelop\accounting\system-service\target\classes started by Gavin in D:\OneDrive\AtGuiGu\JavaDevelop\accounting)
+2023-09-13 09:12:24 |INFO  |main |SpringApplication.java:655 |com.atguigu.accounting.AccountingApplication |The following profiles are active: dev
+2023-09-13 09:12:25 |INFO  |main |RepositoryConfigurationDelegate.java:249 |org.springframework.data.repository.config.RepositoryConfigurationDelegate |Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-09-13 09:12:25 |INFO  |main |RepositoryConfigurationDelegate.java:127 |org.springframework.data.repository.config.RepositoryConfigurationDelegate |Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-09-13 09:12:26 |INFO  |main |RepositoryConfigurationDelegate.java:187 |org.springframework.data.repository.config.RepositoryConfigurationDelegate |Finished Spring Data repository scanning in 28ms. Found 0 Redis repository interfaces.
+2023-09-13 09:12:26 |INFO  |main |TomcatWebServer.java:108 |org.springframework.boot.web.embedded.tomcat.TomcatWebServer |Tomcat initialized with port(s): 8888 (http)
+2023-09-13 09:12:26 |INFO  |main |DirectJDKLog.java:173 |org.apache.coyote.http11.Http11NioProtocol |Initializing ProtocolHandler ["http-nio-8888"]
+2023-09-13 09:12:26 |INFO  |main |DirectJDKLog.java:173 |org.apache.catalina.core.StandardService |Starting service [Tomcat]
+2023-09-13 09:12:26 |INFO  |main |DirectJDKLog.java:173 |org.apache.catalina.core.StandardEngine |Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-09-13 09:12:26 |INFO  |main |DirectJDKLog.java:173 |org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] |Initializing Spring embedded WebApplicationContext
+2023-09-13 09:12:26 |INFO  |main |ServletWebServerApplicationContext.java:285 |org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext |Root WebApplicationContext: initialization completed in 2054 ms
+2023-09-13 09:12:29 |INFO  |main |PropertySourcedRequestMappingHandlerMapping.java:69 |springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping |Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-09-13 09:12:29 |INFO  |main |UserDetailsServiceAutoConfiguration.java:86 |org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration |
+
+Using generated security password: 8394d6a5-3f20-4d9c-8e25-e5b3b8a6c1ba
+
+2023-09-13 09:12:29 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: Ant [pattern='/favicon.ico'], []
+2023-09-13 09:12:29 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2023-09-13 09:12:29 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: Ant [pattern='/webjars/**'], []
+2023-09-13 09:12:29 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: Ant [pattern='/v2/**'], []
+2023-09-13 09:12:29 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: Ant [pattern='/doc.html'], []
+2023-09-13 09:12:30 |INFO  |main |DefaultSecurityFilterChain.java:43 |org.springframework.security.web.DefaultSecurityFilterChain |Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@19b75b2b, org.springframework.security.web.context.SecurityContextPersistenceFilter@209f3887, org.springframework.security.web.header.HeaderWriterFilter@4ae2e781, org.springframework.web.filter.CorsFilter@59c43561, org.springframework.security.web.authentication.logout.LogoutFilter@43a4a9e5, com.atguigu.accounting.security.TokenAuthenticationFilter@634f58d2, com.atguigu.accounting.security.TokenLoginFilter@585513a8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3b35798, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@784d9bc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b18658a, org.springframework.security.web.session.SessionManagementFilter@2dd63e3, org.springframework.security.web.access.ExceptionTranslationFilter@32507479, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1ee5632d]
+2023-09-13 09:12:30 |INFO  |main |ExecutorConfigurationSupport.java:181 |org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor |Initializing ExecutorService 'applicationTaskExecutor'
+2023-09-13 09:12:30 |INFO  |main |DirectJDKLog.java:173 |org.apache.coyote.http11.Http11NioProtocol |Starting ProtocolHandler ["http-nio-8888"]
+2023-09-13 09:12:30 |INFO  |main |TomcatWebServer.java:220 |org.springframework.boot.web.embedded.tomcat.TomcatWebServer |Tomcat started on port(s): 8888 (http) with context path ''
+2023-09-13 09:12:30 |INFO  |main |DocumentationPluginsBootstrapper.java:160 |springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper |Context refreshed
+2023-09-13 09:12:30 |INFO  |main |DocumentationPluginsBootstrapper.java:163 |springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper |Found 2 custom documentation plugin(s)
+2023-09-13 09:12:30 |INFO  |main |ApiListingReferenceScanner.java:41 |springfox.documentation.spring.web.scanners.ApiListingReferenceScanner |Scanning for api listing references
+2023-09-13 09:12:31 |INFO  |main |CachingOperationNameGenerator.java:40 |springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator |Generating unique operation named: saveUsingPOST_1
+2023-09-13 09:12:31 |INFO  |main |CachingOperationNameGenerator.java:40 |springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator |Generating unique operation named: removeByIdUsingDELETE_1
+2023-09-13 09:12:31 |INFO  |main |ApiListingReferenceScanner.java:41 |springfox.documentation.spring.web.scanners.ApiListingReferenceScanner |Scanning for api listing references
+2023-09-13 09:12:31 |INFO  |main |StartupInfoLogger.java:61 |com.atguigu.accounting.AccountingApplication |Started AccountingApplication in 7.545 seconds (JVM running for 9.209)
+2023-09-13 09:12:36 |INFO  |http-nio-8888-exec-4 |DirectJDKLog.java:173 |org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] |Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-13 09:12:36 |INFO  |http-nio-8888-exec-4 |FrameworkServlet.java:525 |org.springframework.web.servlet.DispatcherServlet |Initializing Servlet 'dispatcherServlet'
+2023-09-13 09:12:36 |INFO  |http-nio-8888-exec-4 |FrameworkServlet.java:547 |org.springframework.web.servlet.DispatcherServlet |Completed initialization in 13 ms
+2023-09-13 09:12:36 |INFO  |http-nio-8888-exec-4 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:14:04 |INFO  |http-nio-8888-exec-1 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:26:22 |INFO  |http-nio-8888-exec-3 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:33:52 |INFO  |http-nio-8888-exec-7 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:34:56 |INFO  |http-nio-8888-exec-5 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:35:22 |INFO  |http-nio-8888-exec-6 |TokenAuthenticationFilter.java:48 |com.atguigu.accounting.security.TokenAuthenticationFilter |uri:/admin/user/login
+2023-09-13 09:53:20 |INFO  |SpringContextShutdownHook |ExecutorConfigurationSupport.java:218 |org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor |Shutting down ExecutorService 'applicationTaskExecutor'

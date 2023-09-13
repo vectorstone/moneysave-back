@@ -29,9 +29,11 @@ public class BookExcelDataListener implements ReadListener<BookVo> {
     //创建一个list集合,用来临时的存放要写入到数据库的内容
     private List<BookVo> bookVos = new ArrayList<>();
     BookService bookService;
+    Long userId;
     //构造方法
-    public BookExcelDataListener(BookServiceImpl bookService) {
+    public BookExcelDataListener(BookServiceImpl bookService, Long userId) {
         this.bookService = bookService;
+        this.userId = userId;
     }
 
     //每读取一行数据,就会执行一次下面的这个方法
@@ -94,6 +96,7 @@ public class BookExcelDataListener implements ReadListener<BookVo> {
             Book book = new Book();
             //将dictVo的属性值设置给dict对象,将相同名称+相同类型的属性值,拷贝给另一个对象
             BeanUtils.copyProperties(item,book);
+            book.setUser(userId);//将用户的userId设置进去
             //自动填充没生效,所以需要我们手动生成创建时间和更新时间
             // book.setCreateTime(new Date());
             //subcategory有可能为空,所以这里需要增加一个判断

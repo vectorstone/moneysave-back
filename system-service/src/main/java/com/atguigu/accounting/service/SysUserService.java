@@ -28,5 +28,12 @@ public interface SysUserService extends IService<SysUser> {
 
     Map<String, Object> getUserInfo(String token);
 
+    Map<String, Object> getUserInfoByUserId(Long userId);
+
     List<String> getUserBtnPersByUserId(Long id);
+
+    //根据用户的id获取对应的按钮的权限
+    List<String> getBtnPermissionByUserId(Long userId);
+
+    void addUser(SysUser sysUser);
 }

@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements BookService {
     //账单文件的上传功能
     @Override
-    public void importBook(MultipartFile file) {
+    public void importBook(MultipartFile file, Long userId) {
         //校验判断文件是否合规(文件必须存在,后缀,文件的大小)
         //判断文件的后缀是否合规
         boolean flag =  file.getOriginalFilename().toLowerCase().endsWith(".xls") ||
@@ -59,7 +59,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             EasyExcel.read(file.getInputStream())
                     .head(BookVo.class)
                     .sheet(0)
-                    .registerReadListener(new BookExcelDataListener(this))
+                    .registerReadListener(new BookExcelDataListener(this,userId))
                     .doRead();
         } catch (Exception e) { //放大异常的类型
             //将异常的信息记录到日志文件中
@@ -70,9 +70,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public Page getPageList(Integer pageNum, Integer pageSize, SearchVo searchVo) {
+    public Page getPageList(Integer pageNum, Integer pageSize, SearchVo searchVo, Long userId) {
         Page<Book> bookPage = new Page<>(pageNum, pageSize);
-        LambdaQueryWrapper<Book> wrapper = Wrappers.lambdaQuery(Book.class);
+        LambdaQueryWrapper<Book> wrapper = Wrappers.lambdaQuery(Book.class).eq(Book::getUser,userId);
         //构建查询的条件
         if(searchVo != null){
             //amount金额 >
@@ -107,9 +107,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public void exportAccount(HttpServletResponse response) {
+    public void exportAccount(HttpServletResponse response, Long userId) {
         // 1.先查询数据库中的账单件,然后将其转为BookVo类型的对象
-        List<BookVo> bookVos = this.list().stream().map(book -> {
+        List<BookVo> bookVos = this.list(Wrappers.lambdaQuery(Book.class).eq(Book::getUser,userId)).stream().map(book -> {
             BookVo bookVo = new BookVo();
             // 使用工具类,将查询出来的对象的属性转换为Dict类型的对象
             BeanUtils.copyProperties(book, bookVo);
@@ -137,9 +137,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
     //获取按月份统计的每月支出汇总
     @Override
-    public Map<String, List<String>> getMonthlyCost(String start, String end) {
+    public Map<String, List<String>> getMonthlyCost(String start, String end, Long userId) {
         //start和end格式 '2023-07'
-        List<MonthCostVo> monthCostVoList = baseMapper.getMonthlyCost(start,end);
+        List<MonthCostVo> monthCostVoList = baseMapper.getMonthlyCost(start,end,userId);
         //要将这个list转成两个list,一个是月份的list,另外一个是money的list
         //准备数据
         Map<String,List<String>> map = new HashMap<>();
@@ -155,13 +155,13 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public Map<String, List<String>> getLargeAreaData() {
+    public Map<String, List<String>> getLargeAreaData(Long userId) {
         //准备所需要的map和list集合
         Map<String,List<String>> map = new HashMap<>();
         List<String> day = new ArrayList<>();
         List<String> money = new ArrayList<>();
         //查询获取所有的数据
-        List<Book> list = this.list(Wrappers.lambdaQuery(Book.class).orderByAsc(Book::getCreateTime));
+        List<Book> list = this.list(Wrappers.lambdaQuery(Book.class).eq(Book::getUser,userId).orderByAsc(Book::getCreateTime));
         list.forEach(ledger -> {
             //时间需要处理一下
             Date createTime = ledger.getCreateTime();

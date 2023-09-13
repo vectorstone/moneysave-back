@@ -20,13 +20,13 @@ import java.util.Map;
  */
 public interface BookService extends IService<Book> {
 
-    void importBook(MultipartFile file);
+    void importBook(MultipartFile file, Long userId);
 
-    Page getPageList(Integer pageNum, Integer pageSize, SearchVo searchVo);
+    Page getPageList(Integer pageNum, Integer pageSize, SearchVo searchVo, Long id);
 
-    void exportAccount(HttpServletResponse response);
+    void exportAccount(HttpServletResponse response, Long userId);
 
-    Map<String, List<String>> getMonthlyCost(String start, String end);
+    Map<String, List<String>> getMonthlyCost(String start, String end, Long userId);
 
-    Map<String, List<String>> getLargeAreaData();
+    Map<String, List<String>> getLargeAreaData(Long userId);
 }

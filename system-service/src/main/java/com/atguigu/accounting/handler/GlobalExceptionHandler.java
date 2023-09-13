@@ -3,6 +3,7 @@ package com.atguigu.accounting.handler;
 import com.atguigu.accounting.result.ResponseEnum;
 import com.atguigu.accounting.utils.BusinessException;
 import com.atguigu.accounting.result.R;
+import com.atguigu.accounting.utils.GuiguException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -10,6 +11,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 // import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -31,7 +33,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  */
 @RestControllerAdvice //相当于@RestController + @ControllerAdvice 将异常处理后的结果转为json响应
 @Slf4j
-public class GlobalException {
+public class GlobalExceptionHandler {
     //先来定义一个兜底的异常处理器
     @ExceptionHandler(value = Exception.class)
     public R exception(Exception e){
@@ -43,6 +45,12 @@ public class GlobalException {
     //自定义异常
     @ExceptionHandler(value = BusinessException.class)
     public R businessException(BusinessException e){
+        //将获取到的异常对象的堆栈日志转为字符串
+        log.error("出现异常:{}",ExceptionUtils.getStackTrace(e));
+        return R.error().code(e.getCode()).message(e.getMessage());
+    }
+    @ExceptionHandler(value = GuiguException.class)
+    public R guiGuException(GuiguException e){
         //将获取到的异常对象的堆栈日志转为字符串
         log.error("出现异常:{}",ExceptionUtils.getStackTrace(e));
         return R.error().code(e.getCode()).message(e.getMessage());
@@ -78,10 +86,10 @@ public class GlobalException {
      * @param e
      * @return
      */
-    /* @ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
     public R error(AccessDeniedException e) throws AccessDeniedException {
         // return Result.build(null, ResultCodeEnum.PERMISSION);
         return R.setResult(ResponseEnum.PERMISSION);
-    } */
+    }
 }

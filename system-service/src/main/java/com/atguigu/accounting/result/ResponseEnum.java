@@ -9,8 +9,10 @@ import lombok.ToString;
 @ToString
 public enum ResponseEnum {
 
-    SUCCESS(0, "成功"),
+    // SUCCESS(0, "成功"),
+    SUCCESS(200, "成功"),
     ERROR(-1, "服务器内部错误"),
+    NOT_YOUSELF_ACCOUNT(666,"修改的不是自己的账单的数据"),
 
     //-1xx 服务器错误
     BAD_SQL_GRAMMAR_ERROR(-101, "sql语法错误"),

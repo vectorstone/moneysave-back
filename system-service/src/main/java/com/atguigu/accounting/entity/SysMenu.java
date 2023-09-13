@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -73,5 +74,10 @@ public class SysMenu implements Serializable {
     @TableLogic
     private Integer isDeleted;
 
-
+    // 下级列表
+    @TableField(exist = false)
+    private List<SysMenu> children;
+    //是否选中
+    @TableField(exist = false)
+    private boolean isSelect;
 }

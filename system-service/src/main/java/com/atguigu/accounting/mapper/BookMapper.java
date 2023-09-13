@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface BookMapper extends BaseMapper<Book> {
 
-    List<MonthCostVo> getMonthlyCost(@Param("start") String start,@Param("end") String end);
+    List<MonthCostVo> getMonthlyCost(@Param("start") String start, @Param("end") String end, @Param("userId")Long userId);
 
     List<Book> getAllData();
 }

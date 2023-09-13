@@ -2,28 +2,33 @@ package com.atguigu.accounting.service.impl;
 
 import com.atguigu.accounting.entity.SysMenu;
 import com.atguigu.accounting.entity.SysUser;
+import com.atguigu.accounting.entity.SysUserRole;
+import com.atguigu.accounting.entity.vo.RouterVo;
 import com.atguigu.accounting.entity.vo.UserVo;
 import com.atguigu.accounting.mapper.SysMenuMapper;
 import com.atguigu.accounting.mapper.SysUserMapper;
-import com.atguigu.accounting.utils.JwtUtils;
-import com.atguigu.accounting.result.ResponseEnum;
+import com.atguigu.accounting.mapper.SysUserRoleMapper;
 import com.atguigu.accounting.service.SysUserService;
 
-import com.atguigu.accounting.utils.Asserts;
+import com.atguigu.accounting.utils.MD5;
+import com.atguigu.accounting.utils.MenuHelper;
+import com.atguigu.accounting.utils.RouterHelper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -38,8 +43,12 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
     @Resource
     SysMenuMapper sysMenuMapper;
+    @Autowired
+    private SysUserMapper sysUserMapper;
     @Resource
     RedisTemplate redisTemplate;
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public Page<SysUser> getPageList(Integer page, Integer limit, UserVo userQueryVo) {
@@ -95,10 +104,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Map<String, Object> getUserInfo(String token) {
-        //首先从数据库里面获取用户的基本信息
-        SysUser sysUser = this.getInfo(token);
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getUserInfoByUserId(Long userId) {
+
         //先创建一个map集合用来一会给controller返回map集合
         Map<String,Object> userInfoMap = new HashMap<>();
+
+        //2.查询用户信息,并设置到map集合里面
+        SysUser sysUser = sysUserMapper.selectById(userId);
 
         //2.1将用户的信息放进去
         userInfoMap.put("name",sysUser.getName());
@@ -107,19 +123,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //2.3将用户的角色信息放进去(因为还没有涉及到权限的事情,所以这里先放一个假的数据进去)
         userInfoMap.put("roles","[admin]");
 
-        //3.TODO 查询用户的菜单信息(需要判断是不是管理员,如果是管理员的话直接查询所有,如果不是管理员的话需要进行多表查询)
-        // List<SysMenu> menuByUserId = getMenuByUserId(userId);
+        //3.查询用户的菜单信息(需要判断是不是管理员,如果是管理员的话直接查询所有,如果不是管理员的话需要进行多表查询)
+        List<SysMenu> menuByUserId = getMenuByUserId(userId);
 
-        //TODO 将获取到的用户的菜单构建成树形结构
-        // List<SysMenu> sysMenuList = MenuHelper.buildTree(menuByUserId);
+        //将获取到的用户的菜单构建成树形结构
+        List<SysMenu> sysMenuList = MenuHelper.buildTree(menuByUserId);
 
-        //TODO 将构建成树形的menuList再构建成前端所需要的router的结构
-        // List<RouterVo> routerVos = RouterHelper.buildRouters(sysMenuList);
-        // userInfoMap.put("routers",routerVos);
+        //将构建成树形的menuList再构建成前端所需要的router的结构
+        List<RouterVo> routerVos = RouterHelper.buildRouters(sysMenuList);
+        userInfoMap.put("routers",routerVos);
 
         //4.获取用户的按钮的信息
-        // List<String> btnPermissionByUserId = getBtnPermissionByUserId(userId);
-        // userInfoMap.put("buttons",btnPermissionByUserId);
+        List<String> btnPermissionByUserId = getBtnPermissionByUserId(userId);
+        userInfoMap.put("buttons",btnPermissionByUserId);
 
         return userInfoMap;
     }
@@ -159,5 +175,55 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<String> btnPermission = menuByUserId.stream().filter(menu -> menu.getType() == 2).map(SysMenu::getPerms).collect(Collectors.toList());
 
         return btnPermission;
+    }
+
+    //根据用户的id获取对应的按钮的权限
+    @Override
+    public List<String> getBtnPermissionByUserId(Long userId) {
+        //根据用户id获取对应的菜单的选项
+        List<SysMenu> menuByUserId = getMenuByUserId(userId);
+        //遍历得到对应的按钮的权限
+        /*List<String> btnPermission = new ArrayList<>();
+        menuByUserId.forEach(menu -> {
+            if(menu.getType() == 2){
+                btnPermission.add(menu.getPerms());
+            }
+        });*/
+        //上面的那块代码的高级写法
+        List<String> btnPermission = menuByUserId.stream().filter(menu -> menu.getType() == 2).map(SysMenu::getPerms).collect(Collectors.toList());
+
+        return btnPermission;
+    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Override
+    public void addUser(SysUser sysUser) {
+        //防止传过来的对象里面带的有更新的时间
+        sysUser.setUpdateTime(null);
+        sysUser.setCreateTime(null);
+        //把用户输入的密码生成盐并进行MD5加密
+        //生成盐
+        String salt = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
+        // String encryptPassword = MD5.encrypt(sysUser.getPassword());
+        // String encryptPassword = MD5.encrypt(MD5.encrypt(sysUser.getPassword()) + salt);
+        String encryptPassword = passwordEncoder.encode(sysUser.getPassword());
+        sysUser.setPassword(encryptPassword);
+        sysUser.setSalt(salt);
+
+        //有的人不删除提示的那个内容,所以增加一个判断头像的链接中是否包含中文
+        Pattern p = Pattern.compile("[\u4E00-\u9FA5|\\！|\\，|\\。|\\（|\\）|\\《|\\》|\\“|\\”|\\？|\\：|\\；|\\【|\\】]");
+        Matcher m = p.matcher(sysUser.getHeadUrl());
+        if (StringUtils.isBlank(sysUser.getHeadUrl()) || m.find()){
+            //如果用户没有设置头像的链接的话,那么就给设置一个默认值
+            sysUser.setHeadUrl("https://obsidiantuchuanggavin.oss-cn-beijing.aliyuncs.com/img/20180629210546_CQARA.jpeg");
+        }
+        sysUser.setStatus(1);
+        this.save(sysUser);
+        //生成的用户的默认的角色为普通的用户  普通用户的角色id为1701904865820712961
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(sysUser.getId());
+        sysUserRole.setRoleId(1701904865820712961L);
+        sysUserRoleMapper.insert(sysUserRole);
+
     }
 }

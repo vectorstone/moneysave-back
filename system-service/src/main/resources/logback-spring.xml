@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration  scan="true" scanPeriod="10 seconds">
     <contextName>logback</contextName>
-    <property name="log.path" value="D:/account/system" />
+    <property name="log.path" value="logs/account/system" />
     <!--控制台日志格式：彩色日志-->
     <!-- magenta:洋红 -->
     <!-- boldMagenta:粗红-->
@@ -104,7 +104,8 @@
     <!--开发环境-->
     <springProfile name="dev">
         <!--可以灵活设置此处，从而控制日志的输出-->
-        <root level="INFO">
+        <root level="INFO"> <!--这个是info级别的日志的设置-->
+        <!--<root level="DEBUG"> &lt;!&ndash;这个是debug级别的日志的设置&ndash;&gt;-->
             <appender-ref ref="CONSOLE" />
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="WARN_FILE" />

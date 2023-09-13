@@ -5,6 +5,7 @@
     <select id="getMonthlyCost" resultType="com.atguigu.accounting.entity.vo.MonthCostVo">
         select date_format(create_time, '%Y-%m') cdate, sum(amount) cost
         from book
+        where user = #{userId}
         group by cdate
         having cdate >= #{start}
            and cdate &lt;= #{end}
