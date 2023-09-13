@@ -1,6 +1,8 @@
 package com.atguigu.accounting.controller;
 
 
+import com.alibaba.excel.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import com.atguigu.accounting.entity.Book;
 import com.atguigu.accounting.entity.SysUser;
 import com.atguigu.accounting.entity.vo.SearchVo;
@@ -127,6 +129,11 @@ public class BookController {
     public R largeArea(@RequestHeader("token")String token){
         SysUser sysUser = (SysUser)redisTemplate.boundValueOps(token).get();
         Long userId = sysUser.getId();
+        String largeAreaData = redisTemplate.boundValueOps("largeAreaData").get().toString();
+        if (StringUtils.isNotBlank(largeAreaData)){
+            Map map = JSON.parseObject(largeAreaData, Map.class);
+            return R.ok().data("items",map);
+        }
         Map<String,List<String>> map = bookService.getLargeAreaData(userId);
         return R.ok().data("items",map);
     }
