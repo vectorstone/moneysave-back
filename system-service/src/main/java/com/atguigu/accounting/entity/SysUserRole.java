@@ -13,34 +13,28 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 数据字典
+ * 用户角色
  * </p>
  *
  * @author Atguigu
- * @since 2023-07-30
+ * @since 2023-08-03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Dict对象", description="数据字典")
-public class Dict implements Serializable {
+@ApiModel(value="SysUserRole对象", description="用户角色")
+public class SysUserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "id")
+    @ApiModelProperty(value = "主键id")
       @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "上级id")
-    private Long parentId;
+    @ApiModelProperty(value = "角色id")
+    private Long roleId;
 
-    @ApiModelProperty(value = "名称")
-    private String name;
-
-    @ApiModelProperty(value = "值")
-    private Integer value;
-
-    @ApiModelProperty(value = "编码")
-    private String dictCode;
+    @ApiModelProperty(value = "用户id")
+    private Long userId;
 
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
@@ -54,14 +48,9 @@ public class Dict implements Serializable {
     @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
 
-    @ApiModelProperty(value = "删除标记（0:不可用 1:可用）")
-    @TableField("is_deleted")
+    @ApiModelProperty(value = "删除标记（0:可用 1:已删除）")
     @TableLogic
-    private Boolean deleted;
+    private Integer isDeleted;
 
-    //新增一个属性,用来表示这行数据是否有子对象
-    @ApiModelProperty(value = "是否有下一级(true:有,false:没有")
-//声明该字段并不和数据库中的某一字段映射
-    @TableField(exist = false)
-    private Boolean hasChildren;
+
 }

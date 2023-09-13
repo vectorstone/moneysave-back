@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.List;
 
 /**
  * @Description:
@@ -22,5 +24,16 @@ public class TestReadAndWrite {
         Book book = new Book();
         book.setAmount(new BigDecimal(33.0));
         bookService.save(book);
+    }
+    @Test
+    void test2(){
+        Book book = new Book();
+        book.setAmount(new BigDecimal(33.0));
+        bookService.save(book);
+    }
+    @Test
+    void test3(){
+        List<Book> list = bookService.list();
+        System.out.println(list);
     }
 }

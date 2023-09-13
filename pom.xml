@@ -121,12 +121,25 @@
             <artifactId>velocity-engine-core</artifactId>
             <version>${velocity.version}</version>
         </dependency>
-        <!--swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
+            <!--swagger-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+                <!--
+                解决下面这个报警告的问题:
+                2023-07-04 15:10:30 |WARN  |http-nio-8160-exec-7 |AbstractSerializableParameter.java:421
+                |io.swagger.models.parameters.AbstractSerializableParameter
+                |Illegal DefaultValue null for parameter type integer
+                依赖排除
+                -->
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-models</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         <!--swagger ui-->
         <dependency>
             <groupId>io.springfox</groupId>

@@ -1,6 +1,5 @@
 package com.atguigu.accounting.utils;
 
-import com.atguigu.accounting.utils.BusinessException;
 import com.atguigu.accounting.result.ResponseEnum;
 
 /**

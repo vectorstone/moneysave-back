@@ -33,6 +33,7 @@ public enum ResponseEnum {
     LOGIN_PASSWORD_ERROR(209, "密码错误"),
     LOGIN_LOCKED_ERROR(210, "用户被锁定"),
     LOGIN_AUTH_ERROR(-211, "未登录"),
+    USER_EXSIT_ERROR(-222, "用户名已存在"),
 
     USER_TYPE_ERROR(-302, "用户类型错误"),
 
@@ -70,8 +71,23 @@ public enum ResponseEnum {
     UPDATE_FAIL(702,"修改失败"),
     HFB_BIND_FAIL(704,"汇付宝账户绑定失败"),
     HFB_MAKE_LOAN_FAIL(705,"汇付宝放款失败"),
-    DELETE_FAIL(703,"删除失败")
-    ;
+    DELETE_FAIL(703,"删除失败"),
+
+    //=======================
+    FAIL(2010, "失败"),
+    SERVICE_ERROR(2012, "服务异常"),
+    DATA_ERROR(2040, "数据异常"),
+    ILLEGAL_REQUEST(2050, "非法请求"),
+    REPEAT_SUBMIT(2060, "重复提交"),
+    ARGUMENT_VALID_ERROR(2100, "参数校验异常"),
+    LOGIN_AUTH(2080, "未登陆"),
+    PERMISSION(2090, "没有权限"),
+    ACCOUNT_ERROR(2140, "账号不正确"),
+    PASSWORD_ERROR(2150, "密码不正确"),
+    LOGIN_MOBLE_ERROR(2160, "账号不正确"),
+    ACCOUNT_STOP(2170, "账号已停用"),
+    NODE_ERROR(2180, "该节点下有子节点，不可以删除");
+    //=======================
 
     private Integer code;//状态码
     private String message;//消息

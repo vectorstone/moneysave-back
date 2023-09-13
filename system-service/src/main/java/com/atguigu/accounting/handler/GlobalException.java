@@ -3,13 +3,13 @@ package com.atguigu.accounting.handler;
 import com.atguigu.accounting.result.ResponseEnum;
 import com.atguigu.accounting.utils.BusinessException;
 import com.atguigu.accounting.result.R;
-import com.atguigu.accounting.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+// import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -71,4 +72,16 @@ public class GlobalException {
         //SERVLET_ERROR(-102, "servlet请求异常"),
         return R.error().message(ResponseEnum.SERVLET_ERROR.getMessage()).code(ResponseEnum.SERVLET_ERROR.getCode());
     }
+
+    /**
+     * spring security异常
+     * @param e
+     * @return
+     */
+    /* @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public R error(AccessDeniedException e) throws AccessDeniedException {
+        // return Result.build(null, ResultCodeEnum.PERMISSION);
+        return R.setResult(ResponseEnum.PERMISSION);
+    } */
 }

@@ -5,15 +5,11 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.atguigu.accounting.entity.Book;
 import com.atguigu.accounting.entity.vo.BookVo;
 import com.atguigu.accounting.service.BookService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 @Slf4j
