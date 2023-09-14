@@ -1,6 +1,7 @@
 package com.atguigu.accounting.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.accounting.entity.SysUser;
 import com.atguigu.accounting.entity.SysUserRole;
 import com.atguigu.accounting.entity.vo.LoginVo;
@@ -8,6 +9,7 @@ import com.atguigu.accounting.entity.vo.UserVo;
 import com.atguigu.accounting.mapper.SysUserRoleMapper;
 import com.atguigu.accounting.result.R;
 import com.atguigu.accounting.result.ResponseEnum;
+import com.atguigu.accounting.service.BookService;
 import com.atguigu.accounting.service.SysUserService;
 import com.atguigu.accounting.utils.BusinessException;
 import com.atguigu.accounting.utils.MD5;
@@ -51,6 +53,8 @@ public class SysUserController {
     private SysUserService sysUserService;
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    BookService bookService;
 
 
     @PreAuthorize("hasAnyAuthority('bnt.sysUser.list')")
@@ -150,7 +154,6 @@ public class SysUserController {
             throw new BusinessException(ResponseEnum.ACCOUNT_STOP);
         }
 
-
         String token = UUID.randomUUID().toString().replaceAll("-", "");
         redisTemplate.boundValueOps(token).set(sysUser,2, TimeUnit.HOURS);
         // String token = JwtUtils.createToken(sysUser.getId(), sysUser.getUsername());
@@ -168,6 +171,10 @@ public class SysUserController {
 
         //获取用户的信息(用户信息,菜单信息,对应的按钮权限)
         Map<String,Object> userInfoMap = sysUserService.getUserInfoByUserId(sysUser.getId());
+
+        //查询所有的账单的数据并存入缓存里面(不设置过期时间)
+        Map<String, List<String>> largeAreaData = bookService.getLargeAreaData(sysUser.getId());
+        redisTemplate.boundValueOps("largeAreaData").set(JSON.toJSON(largeAreaData));
 
         // return R.ok().data("userInfoMap",userInfoMap);
         return Result.ok(userInfoMap);
