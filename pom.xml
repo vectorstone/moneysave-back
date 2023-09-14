@@ -42,6 +42,18 @@
         <httpclient.version>4.5.1</httpclient.version>
     </properties>
     <dependencies>
+        <!--通用的加解密配置文件的工具,用来给数据库的链接的密码加密用的-->
+        <!-- jasypt-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
