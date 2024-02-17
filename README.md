@@ -5,7 +5,7 @@
 家庭记账项目属于自己开源的一个独立制作的项目，适合于家庭内部使用，成员之间的记账数据实现了隔离处理，支持将市面上一些记账app的数据一键导入功能，利用Echarts展示分析图表，部署简单，方便家庭内部进行支出统计和分析。
 主要包含了权限管理模块、Excel数据导入导出模块、Echarts图表展示模块、账单的增删改查模块。
 
-![](https://obsidiantuchuanggavin.oss-cn-beijing.aliyuncs.com/img/capture20230920153703.gif)
+![](https://obsidiantuchuanggavin.oss-cn-beijing.aliyuncs.com/img/capture20230920222009111.gif)
 ## 登录和注册
 可以登录和注册
 ![](https://obsidiantuchuanggavin.oss-cn-beijing.aliyuncs.com/img/Pasted%20image%2020230920154151.png)
