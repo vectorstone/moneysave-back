@@ -1,6 +1,6 @@
 server:
   # 必须使用8160,后面的微信登录 wx授权回调域学校配置的是localhost:8160 使用别的端口将来不能测试
-  port: 8888
+  port: 8887
 spring:
   # 应用名称
   application:
@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql:///account_book?serverTimezone=Asia/Shanghai
 #    url: jdbc:mysql://${REMOTE_HOST:localhost}:32768/account_book?serverTimezone=Asia/Shanghai
-    url: jdbc:mysql://124.222.220.45:32768/account_book?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://39.100.105.236:32768/account_book?serverTimezone=Asia/Shanghai
 #    username: ${REMOTE_MYSQL_USERNAME:root}
     username: ENC(+UqVvXNR//wSI0Qp1xAh/PLrJKYjgnhAoyL5BAvngMvInTuxcijGEkaqtjjfUN8d)
 #    password: ${REMOTE_MYSQL_PASSWORD:root}
@@ -24,7 +24,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   redis:
-    host: 124.222.220.45
+    host: 39.100.105.236
 #    host: ${REMOTE_HOST}
     port: 6379
     password: ENC(XC2ObTM80vSAsUNA5uTAjMp4OEg09wYpXsVXJS1xm62fZN3dcdocryBJpa6qbMTm)
